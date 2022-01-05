@@ -32,6 +32,27 @@ class Node:
                 res += self.curr_level(root.right, level - 1)
         return res
     
+    def spiral_levelorder_traversal(self, root):
+        res = []
+        for level in range(1, self.height(root)+1):
+            res.append(self.curr_level_spiral(root, level, level%2))
+        return res
+    
+    def curr_level_spiral(self, root, level, spiral_ref):
+        res = []
+        if root:
+            if level == 1:
+                res.append(root.val)
+            else:
+                if spiral_ref == 1:
+                    res = self.curr_level_spiral(root.left, level-1, spiral_ref)
+                    res += self.curr_level_spiral(root.right, level-1, spiral_ref)
+                else:
+                    res = self.curr_level_spiral(root.right, level-1, spiral_ref)
+                    res += self.curr_level_spiral(root.left, level-1, spiral_ref)
+        return res
+
+    
     def height(self, root):
         if not root:
             return 0
@@ -49,8 +70,15 @@ if __name__ == "__main__":
     root.insert(5)
 
     levelorder = root.levelorder_traversal(root)
+    levelorder_spiral = root.spiral_levelorder_traversal(root)
     
     print("Level Order Traversal")
     for level, curr_level in enumerate(levelorder):
         print(f"Level {level+1}", end = "       ")
         print(*curr_level)
+    
+    print("Spiral Level Order Traversal")
+    for level, curr_level in enumerate(levelorder_spiral):
+        print(f"Level {level+1}", end = "       ")
+        print(*curr_level)
+
