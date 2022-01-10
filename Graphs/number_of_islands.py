@@ -2,7 +2,6 @@
 
 def numIslands(grid) -> int:
         rows, columns = len(grid), len(grid[0])
-        print(rows, columns)
         visited = [[False]*columns for row in range(rows)]
         result = 0
         for i in range(rows):
